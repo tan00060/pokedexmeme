@@ -3,6 +3,7 @@ const app = {
     userSearch: "",
     pokemonMoves: [],
     pokemonAbilities: [],
+    pokemonTypes: [],
     
      init: () => {
         console.log("test")
@@ -16,9 +17,13 @@ const app = {
         app.userSearch = searchValue;
         console.log(app.userSearch)
         app.pickPokemon()
+     },
+
+     newSearch: () =>{
         app.userSearch = "";
         searchValue.value = "";
         app.pokemonMoves = [];
+        app.pokemonAbilities = [];
         document.getElementById("myText").value = "";
      },
 
@@ -30,18 +35,30 @@ const app = {
             .then(data => {
                 console.log(data)
                 document.getElementById("pokePic").src = data.sprites.front_default
+                document.getElementById("id").textContent = `ID: ${data.id}`
                 document.getElementById("name").textContent = `Name: ${data.name}`
                 document.getElementById("type").textContent = `Type: ${data.types[0].type.name}`
-                document.getElementById("height")
-                document.getElementById("weight")
                 app.pokemonMoves = data.moves;
                 app.pokemonAbilities = data.abilities;
+                app.pokemonTypes = data.types
 
-
+                app.getTypes()
             })
             .catch((err) =>{
                 console.log("we have hit an error!!")
             })
+     },
+
+     getTypes: () =>{
+        console.log("getting pokemon types")
+        
+        let newString = [];
+        app.pokemonTypes.forEach(type => {
+            newString.push(type.type.name)
+        });
+
+        newString = newString.join(', ')
+        console.log(newString)
      },
 
      getMoves: () =>{
