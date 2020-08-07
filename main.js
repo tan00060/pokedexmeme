@@ -1,10 +1,14 @@
 const app = {
 
     userSearch: "",
+    pokemonMoves: [],
+    pokemonAbilities: [],
     
      init: () => {
         console.log("test")
         document.getElementById("searchButton").addEventListener('click', app.userSearchValue);
+        document.getElementById("pokemonMoves").addEventListener('click', app.getMoves);
+        document.getElementById("pokemonAbilities").addEventListener('click', app.getAbilities);
      },
 
      userSearchValue: () => {
@@ -14,6 +18,7 @@ const app = {
         app.pickPokemon()
         app.userSearch = "";
         searchValue.value = "";
+        app.pokemonMoves = [];
         document.getElementById("myText").value = "";
      },
 
@@ -29,12 +34,31 @@ const app = {
                 document.getElementById("type").textContent = `Type: ${data.types[0].type.name}`
                 document.getElementById("height")
                 document.getElementById("weight")
+                app.pokemonMoves = data.moves;
+                app.pokemonAbilities = data.abilities;
+
 
             })
             .catch((err) =>{
                 console.log("we have hit an error!!")
             })
+     },
+
+     getMoves: () =>{
+        for (let i = 0; i < app.pokemonMoves.length; i++) {
+            console.log(app.pokemonMoves[i].move.name)          
+        }
+     },
+
+     getAbilities: () =>{
+         for (let i = 0; i < app.pokemonAbilities.length; i++) {
+             console.log(app.pokemonAbilities[i].ability.name)
+         }
      }
+
+
+
+
 };
 
 document.addEventListener('DOMContentLoaded', app.init);

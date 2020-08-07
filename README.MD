@@ -1,13 +1,13 @@
 # Making a Pokedex for fun.
 
 
-API
+## API
 ```
 https://pokeapi.co/api/v2/pokemon/
 ```
 
 
-Pokedex by Bidji
+## Pokedex by Bidji
 ```
 https://codepen.io/Bidji/pen/MYdPwo
 ```
