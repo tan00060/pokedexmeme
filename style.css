@@ -734,6 +734,7 @@
 
 	div#stats
 	{
+		overflow: auto;
 		height: 130px;
 		width: 280px;
 		padding: 10px;
