@@ -25,7 +25,7 @@ const app = {
                 event.preventDefault();
                 app.userSearchValue();
             });
-        document.getElementById("pokemonInfo").addEventListener("click", app.displayInfo)
+        // document.getElementById("pokemonInfo").addEventListener("click", app.displayInfo)
         document.getElementById("pokemonStats").addEventListener("click", app.getStats)
 
 
@@ -69,19 +69,16 @@ const app = {
         });
 
         newString = newString.join(', ')
-        document.getElementById("type").textContent = `Type: ${newString}`
+        document.getElementById("container").textContent = `Type: ${newString}`
 
     },
 
     getMoves: () => {
-        
+        console.log(app.currentPokemon)
+
         let stats = document.getElementById("stats");
         let list = document.createElement("ul")
         stats.innerHTML = ''
-
-
-
-
         list.id = "pokeballBullet"
 
         list.id = "moveList"
@@ -104,44 +101,51 @@ const app = {
         app.pokemonInfo = []
         app.pokemonInfo.push(data.weight)
         app.pokemonInfo.push(data.height)
-
-        console.log(app.pokemonInfo)
+        // console.log(app.pokemonInfo)
     },
 
     displayInfo: () =>{
 
     },
 
-    nextPokemon: () => {
-        console.log("go forward one pokemon!")
-        app.currentPokemon = app.currentPokemon + 1
-        app.displayPokemon()
+    // nextPokemon: () => {
+    //     console.log("go forward one pokemon!")
+    //     console.log(app.currentPokemon)
+    //     app.currentPokemon = app.currentPokemon + 1
+    //     app.displayPokemon()
 
-        if (document.getElementById('moves')) {
-            app.clearMoves()
-        }
-    },
+    //     if (document.getElementById('moves')) {
+    //         app.clearMoves()
+    //     }
+    // },
 
-    backPokemon: () => {
-        console.log("go back one pokemon")
-        app.currentPokemon = app.currentPokemon - 1
-        app.displayPokemon()
+    // backPokemon: () => {
+    //     console.log("go back one pokemon")
+    //     app.currentPokemon = app.currentPokemon - 1
+    //     app.displayPokemon()
 
-        if (document.getElementById('moves')) {
-            app.clearMoves()
-        }
-    },
+    //     if (document.getElementById('moves')) {
+    //         app.clearMoves()
+    //     }
+    // },
 
     displayPokemon: () => {
         console.log("this is display pokemon")
         fetch(`${app.API}${app.currentPokemon}`)
             .then(response => response.json())
             .then(data => {
-                console.log(data)
-                let stats = document.getElementById("moves");
-                stats.innerHTML = ''                
+                // console.log(data)
+                console.log(app.currentPokemon)
+
+                let stats = document.getElementById("stats");
+                stats.innerHTML = ''         
+                
+                let container = document.createElement('div')
                 let id = document.createElement('p')
                 let name = document.createElement('p')
+                let types = document.createElement('p')
+
+                types.id = "container"
 
 
                 id.textContent = `ID: ${data.id}`
@@ -156,14 +160,16 @@ const app = {
 
                 app.getSprites(data);
                 app.getInfo(data);
+                document.getElementById("pokePic").src = app.pokemonSprites[0]
 
-                stats.appendChild(id)
-                stats.appendChild(name)
+                container.appendChild(id)
+                container.appendChild(name)
+                container.appendChild(types)
+                stats.appendChild(container)
                 app.getTypes()
 
 
                 app.pokemonStats = JSON.stringify(data.stats)
-                document.getElementById("pokePic").src = app.pokemonSprites[0]
             })
             .catch((err) => {
                 console.log("we have hit an error!!")
@@ -172,6 +178,7 @@ const app = {
 
     getSprites: (data) => {
         app.pokemonSprites = []
+        
         app.pokemonSprites.push(data.sprites.front_default)
         app.pokemonSprites.push(data.sprites.back_default)
         app.pokemonSprites.push(data.sprites.front_shiny)
@@ -233,12 +240,14 @@ const app = {
     nextPokemon: () => {
         console.log("go forward one pokemon!");
         app.currentPokemon = app.currentPokemon + 1;
+        console.log(app.currentPokemon)
         app.displayPokemon();
     },
 
     backPokemon: () => {
         console.log("go back one pokemon");
         app.currentPokemon = app.currentPokemon - 1;
+        console.log(app.currentPokemon)
         app.displayPokemon();
     },
 
