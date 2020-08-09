@@ -3,6 +3,11 @@
   padding: 0;
 }
 
+#pokeballBullet{
+  background: url('/assets/pokeball.png') no-repeat left top;
+  padding: 10px 10px;
+}
+
 #myText {
   font-size: 30;
   padding: 10px;

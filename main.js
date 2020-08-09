@@ -74,29 +74,30 @@ const app = {
     },
 
     getMoves: () => {
-        let stats = document.getElementById("moves");
+        
+        let stats = document.getElementById("stats");
         let list = document.createElement("ul")
+        stats.innerHTML = ''
+
+
+
+
+        list.id = "pokeballBullet"
+
         list.id = "moveList"
         stats.appendChild(list)
         for (let i = 0; i < app.pokemonMoves.length; i++) {
             let moves = document.createElement("li")
+            moves.id = "pokeballBullet"
             list.appendChild(moves)
             moves.textContent = `${app.pokemonMoves[i].move.name}`
+            stats.appendChild(moves)
         }
     },
 
     clearMoves: () => {
-        let moveList = document.getElementById('moveList');
-        if (moveList) {
-            moveList.remove()
-        }
-
-    },
-
-    getAbilities: () => {
-        for (let i = 0; i < app.pokemonAbilities.length; i++) {
-            console.log(app.pokemonAbilities[i].ability.name)
-        }
+        let stats = document.getElementById('stats')
+        stats.innerHTML = ''
     },
 
     getInfo: (data) =>{
@@ -136,11 +137,15 @@ const app = {
         fetch(`${app.API}${app.currentPokemon}`)
             .then(response => response.json())
             .then(data => {
-
                 console.log(data)
+                let stats = document.getElementById("moves");
+                stats.innerHTML = ''                
+                let id = document.createElement('p')
+                let name = document.createElement('p')
 
-                document.getElementById("id").textContent = `ID: ${data.id}`
-                document.getElementById("name").textContent = `Name: ${
+
+                id.textContent = `ID: ${data.id}`
+                name.textContent = `Name: ${
                     data.name[0].toUpperCase() + data.name.slice(1)
                 }`;
 
@@ -150,8 +155,12 @@ const app = {
                 app.currentPokemon = data.id
 
                 app.getSprites(data);
-                app.getTypes()
                 app.getInfo(data);
+
+                stats.appendChild(id)
+                stats.appendChild(name)
+                app.getTypes()
+
 
                 app.pokemonStats = JSON.stringify(data.stats)
                 document.getElementById("pokePic").src = app.pokemonSprites[0]
@@ -206,8 +215,18 @@ const app = {
     },
 
     getAbilities: () => {
+        console.log("lets find out abilities!!")
+
+        let stats = document.getElementById('stats')
+        stats.innerHTML = ''
+        console.log("clear innerHTML")
+
         for (let i = 0; i < app.pokemonAbilities.length; i++) {
-            console.log(app.pokemonAbilities[i].ability.name);
+            let abilities = document.createElement('p')
+            abilities.textContent = `${app.pokemonAbilities[i].ability.name}`
+
+            stats.appendChild(abilities)
+            console.log(app.pokemonAbilities[i].ability.name)
         }
     },
 
