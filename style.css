@@ -4,7 +4,7 @@
 }
 
 #pokeballBullet{
-  background: url('/assets/pokeball.png') no-repeat left top;
+  background: url('./assets/pokeball.png') no-repeat left top;
   padding: 10px 10px;
 }
 
