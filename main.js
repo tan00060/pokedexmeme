@@ -19,6 +19,10 @@ const app = {
         document.getElementById("leftcross").addEventListener('click', app.backPokemon);
         document.getElementById("botcross").addEventListener('click', app.downSprite);
         document.getElementById("topcross").addEventListener('click', app.upSprite);
+        document.getElementById("search-box").addEventListener("submit", (event) => {
+                event.preventDefault();
+                app.userSearchValue();
+            });
 
     },
     userSearchValue: () => {
@@ -52,8 +56,10 @@ const app = {
 
     getTypes: () => {
         let newString = [];
+
         app.pokemonTypes.forEach(type => {
-            newString.push(type.type.name)
+            const newType = type.type.name;
+            newString.push(newType[0].toUpperCase() + newType.slice(1));
         });
 
         newString = newString.join(', ')
@@ -116,7 +122,9 @@ const app = {
                 console.log(data)
 
                 document.getElementById("id").textContent = `ID: ${data.id}`
-                document.getElementById("name").textContent = `Name: ${data.name}`
+                document.getElementById("name").textContent = `Name: ${
+                    data.name[0].toUpperCase() + data.name.slice(1)
+                }`;
 
                 app.pokemonMoves = data.moves;
                 app.pokemonAbilities = data.abilities;
