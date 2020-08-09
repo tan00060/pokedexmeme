@@ -5,7 +5,7 @@ const app = {
     pokemonAbilities: [],
     pokemonTypes: [],
     currentSprite: "",
-    pokemonSprites: "",
+    pokemonSprites: [],
     currentPokemon: "",
     API: "https://pokeapi.co/api/v2/pokemon/",
     value: "",
@@ -197,29 +197,6 @@ const app = {
         console.log("go back one pokemon");
         app.currentPokemon = app.currentPokemon - 1;
         app.displayPokemon();
-    },
-
-    displayPokemon: () => {
-        fetch(`${app.API}${app.currentPokemon}`)
-            .then((response) => response.json())
-            .then((data) => {
-                document.getElementById("pokePic").src = data.sprites.front_default;
-                document.getElementById("id").textContent = `ID #: ${data.id}`;
-                document.getElementById("name").textContent = `Name: ${
-          data.name[0].toUpperCase() + data.name.slice(1)
-        }`;
-
-                app.pokemonMoves = data.moves;
-                app.pokemonAbilities = data.abilities;
-                app.pokemonTypes = data.types;
-                app.pokemonSprites = data.sprites;
-                app.currentPokemon = data.id;
-
-                app.getTypes();
-            })
-            .catch((err) => {
-                console.log("we have hit an error!!");
-            });
     },
 
 };
