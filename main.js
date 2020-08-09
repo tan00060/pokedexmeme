@@ -75,30 +75,23 @@ const app = {
     },
 
     getMoves: () => {
-        let moves = document.createElement("div");
-        moves.id = "moves"
-        document.getElementById('stats').appendChild(moves)
-
         let stats = document.getElementById("moves");
         let list = document.createElement("ul")
+        list.id = "moveList"
         stats.appendChild(list)
         for (let i = 0; i < app.pokemonMoves.length; i++) {
-            console.log(app.pokemonMoves[i].move.name)
             let moves = document.createElement("li")
             list.appendChild(moves)
             moves.textContent = `${app.pokemonMoves[i].move.name}`
         }
     },
 
-
-    // needs fixing
-    // clearMoves: () => {
-    //     let moves = document.getElementById('moves');
-    //     if (moves === moves) {
-    //         moves.remove();
-    //     }else{
-    //     }
-    // },
+    clearMoves: () => {
+        let moveList = document.getElementById('moveList');
+        if(moveList){
+            moveList.remove()
+        }
+    },
 
     getAbilities: () => {
         for (let i = 0; i < app.pokemonAbilities.length; i++) {
@@ -110,16 +103,20 @@ const app = {
         console.log("go forward one pokemon!")
         app.currentPokemon = app.currentPokemon + 1
         app.displayPokemon()
-        // app.clearMoves()
 
-        console.log(app.currentPokemon)
+        if(document.getElementById('moves')){
+            app.clearMoves()
+        }
     },
 
     backPokemon: () => {
         console.log("go back one pokemon")
         app.currentPokemon = app.currentPokemon - 1
         app.displayPokemon()
-        app.clearMoves()
+
+        if(document.getElementById('moves')){
+            app.clearMoves()
+        }
     },
 
     displayPokemon: () => {
