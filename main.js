@@ -91,6 +91,7 @@ const app = {
         if(moveList){
             moveList.remove()
         }
+
     },
 
     getAbilities: () => {
