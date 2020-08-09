@@ -9,6 +9,8 @@ const app = {
     currentPokemon: "",
     API: "https://pokeapi.co/api/v2/pokemon/",
     value: "",
+    pokemonInfo: [],
+    pokemonStats: "",
 
     init: () => {
         console.log("testwefew")
@@ -23,6 +25,9 @@ const app = {
                 event.preventDefault();
                 app.userSearchValue();
             });
+        document.getElementById("pokemonInfo").addEventListener("click", app.displayInfo)
+        document.getElementById("pokemonStats").addEventListener("click", app.getStats)
+
 
     },
     userSearchValue: () => {
@@ -45,6 +50,7 @@ const app = {
         fetch(`${app.API}${app.userSearch}`)
             .then(response => response.json())
             .then(data => {
+                console.log(data)
                 app.currentPokemon = data.id
                 app.displayPokemon()
             })
@@ -93,6 +99,18 @@ const app = {
         }
     },
 
+    getInfo: (data) =>{
+        app.pokemonInfo = []
+        app.pokemonInfo.push(data.weight)
+        app.pokemonInfo.push(data.height)
+
+        console.log(app.pokemonInfo)
+    },
+
+    displayInfo: () =>{
+
+    },
+
     nextPokemon: () => {
         console.log("go forward one pokemon!")
         app.currentPokemon = app.currentPokemon + 1
@@ -133,9 +151,10 @@ const app = {
 
                 app.getSprites(data);
                 app.getTypes()
+                app.getInfo(data);
 
+                app.pokemonStats = JSON.stringify(data.stats)
                 document.getElementById("pokePic").src = app.pokemonSprites[0]
-                console.log("this is line 130" + app.pokemonSprites)
             })
             .catch((err) => {
                 console.log("we have hit an error!!")
@@ -144,13 +163,10 @@ const app = {
 
     getSprites: (data) => {
         app.pokemonSprites = []
-        console.log(app.pokemonSprites)
         app.pokemonSprites.push(data.sprites.front_default)
         app.pokemonSprites.push(data.sprites.back_default)
         app.pokemonSprites.push(data.sprites.front_shiny)
         app.pokemonSprites.push(data.sprites.back_shiny)
-
-        console.log(app.pokemonSprites)
     },
 
     downSprite: () => {
@@ -206,6 +222,23 @@ const app = {
         app.currentPokemon = app.currentPokemon - 1;
         app.displayPokemon();
     },
+
+    getStats: () => {
+        let stats = document.getElementById('stats')
+        stats.innerHTML = ''
+        let contain = document.createElement("div")
+        let pokemonStats = JSON.parse(app.pokemonStats)
+
+        for (let i = 0; i < pokemonStats.length; i++) {
+            let base_stats = document.createElement('p')
+
+            base_stats.textContent = `${pokemonStats[i].stat.name.toUpperCase()}: ${pokemonStats[i].base_stat}`
+
+            contain.appendChild(base_stats)
+            stats.appendChild(contain)
+        }
+
+    }
 
 };
 
