@@ -13,7 +13,7 @@ const app = {
     pokemonStats: "",
 
     init: () => {
-        console.log("Pokedex!!")
+        console.log("Pokedex test 123!")
         document.getElementById("searchButton").addEventListener('click', app.userSearchValue);
         document.getElementById("pokemonMoves").addEventListener('click', app.getMoves);
         document.getElementById("pokemonAbilities").addEventListener('click', app.getAbilities);
